@@ -8,23 +8,40 @@ typedef struct node {
 
 // Returns number of nodes in the linkedList.
 int length(node* head)
-{
-   struct node *tmp = head;
-    int len = 0;
-   while (tmp != NULL)
-   {
-      tmp = tmp->next;
-      len++;
-   }
+{ //here
+int count = 0;
+    while (head != NULL) {
+        count++;
+        head = head->next;
+    }
+    return count;
+//here
 
-   return (len);
 }
 
 // parses the string in the linkedList
 //  if the linked list is head -> |a|->|b|->|c|
 //  then toCString function wil return "abc"
 char* toCString(node* head)
-{
+{ 
+//here
+int len = length(head);
+    char* str = (char*)malloc((len + 1) * sizeof(char)); // Plus one for the null terminator
+    if (str == NULL) {
+        fprintf(stderr, "Memory allocation failed\n");
+        exit(EXIT_FAILURE);
+    }
+    int i = 0;
+    while (head != NULL) {
+        str[i++] = head->letter;
+        head = head->next;
+    }
+    str[i] = '\0'; // Null terminator
+    return str;
+	//here
+
+
+
 }
 
 // inserts character to the linkedlist
@@ -33,11 +50,42 @@ char* toCString(node* head)
 // head -> |a|->|b|->|c|->|x|
 void insertChar(node** pHead, char c)
 {
+//here
+node* newNode = (node*)malloc(sizeof(node));
+    if (newNode == NULL) {
+        fprintf(stderr, "Memory allocation failed\n");
+        exit(EXIT_FAILURE);
+    }
+    newNode->letter = c;
+    newNode->next = NULL;
+
+    if (*pHead == NULL) {
+        *pHead = newNode;
+    } else {
+        node* curr = *pHead;
+        while (curr->next != NULL) {
+            curr = curr->next;
+        }
+        curr->next = newNode;
+    }
+
+//here
 }
 
 // deletes all nodes in the linkedList.
 void deleteList(node** pHead)
 {
+//here
+node* curr = *pHead;
+    node* next;
+    while (curr != NULL) {
+        next = curr->next;
+        free(curr);
+        curr = next;
+    }
+    *pHead = NULL; // Update the head pointer to NULL after deleting
+//here
+
 }
 
 int main(void)
